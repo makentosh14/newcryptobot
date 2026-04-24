@@ -127,6 +127,10 @@ async def scan_once(symbols: List[str]) -> None:
     primary_tf = tfs[len(tfs) // 2] if tfs else "15"
 
     for symbol in symbols:
+        # Skip symbols we already hold — no point scoring them
+        if symbol in risk_manager.open_positions:
+            continue
+          
         candles = await market_data.get_candles(symbol, primary_tf, n=200)
         if len(candles) < 60:
             continue
