@@ -108,10 +108,10 @@ def score_candles(candles: List[Candle]) -> Score:
     trend_score = 0.0
     # EMA20 slope
     slope20 = slope(ema20, 5)
-    if direction == "LONG" and slope20 > 0:
+    if direction == "LONG" and slope20 > 1e-9:
         trend_score += 10
         reasons.append(f"EMA20 rising (slope={slope20:.4f})")
-    elif direction == "SHORT" and slope20 < 0:
+    elif direction == "SHORT" and slope20 < 1e-9:
         trend_score += 10
         reasons.append(f"EMA20 falling (slope={slope20:.4f})")
 
