@@ -89,7 +89,12 @@ class PositionMonitor:
         for symbol, setup in open_positions.items():
             price = await self._get_price(symbol)
             if price is None or price <= 0:
+                log.debug("Monitor: no price for %s; skipping tick", symbol)
                 continue
+            log.debug(
+                "Monitor %s side=%s price=%.6f SL=%.6f TP=%.6f",
+                symbol, setup.side, price, setup.stop_loss, setup.take_profit,
+            )
 
             # --- SL / TP check ---
             hit_sl = self._price_hit_sl(setup, price)
