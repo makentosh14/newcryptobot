@@ -1,0 +1,21 @@
+# Core async + HTTP
+aiohttp==3.9.5
+websockets==12.0
+
+# Bybit REST SDK (V5 unified)
+pybit==5.7.0
+
+# Data + indicators
+numpy==1.26.4
+pandas==2.2.2
+
+# Config + validation
+pydantic==2.7.1
+pydantic-settings==2.2.1
+python-dotenv==1.0.1
+
+# Telegram (async)
+python-telegram-bot==21.1.1
+
+# Typing helpers
+typing-extensions==4.11.0
