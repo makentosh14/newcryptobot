@@ -36,7 +36,6 @@ from market_data import market_data
 from risk_manager import TradeSetup, risk_manager
 from trade_executor import Fill, trade_executor
 
-
 log = get_logger(__name__)
 
 MONITOR_INTERVAL_SEC = 2
@@ -114,7 +113,10 @@ class PositionMonitor:
 
     async def _get_price(self, symbol: str) -> Optional[float]:
         """Prefer WS cache last close; fall back to REST ticker."""
-        candles = await market_data.get_candles(symbol, "1", n=2)
+        # Use primary timeframe (same as scanner/WS subscription) so we hit cache
+        tfs = settings.timeframes_list
+        primary_tf = tfs[len(tfs) // 2] if tfs else "15"
+        candles = await market_data.get_candles(symbol, primary_tf, n=2)
         if candles:
             return candles[-1].close
         ticker = await bybit_api.get_ticker(symbol)
